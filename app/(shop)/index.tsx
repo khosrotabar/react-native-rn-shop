@@ -28,19 +28,14 @@ const Home = () => {
       <BottomSheet
         ref={bottomSheetRef}
         index={isOpen ? 0 : -1}
-        snapPoints={["40%", "85%"]}
+        snapPoints={["92%"]}
         onChange={(index) => {
           if (index === -1) setIsOpen(false);
         }}
-        enablePanDownToClose
         keyboardBehavior="extend"
-        activeOffsetY={0}
-        bottomInset={0}
+        enablePanDownToClose
         containerStyle={{
           borderRadius: 16,
-          marginBottom: 10,
-          marginLeft: 10,
-          marginRight: 10,
         }}
       >
         <BottomSheetView className="flex-1">
