@@ -10,8 +10,11 @@ import {
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { CATEGORIES } from "../assets/categories";
+import { useCartStore } from "../store/cart-store";
 
-export const ListHeader = () => {
+export const ListHeader = ({ onPress }: { onPress: () => void }) => {
+  const { getItemCount } = useCartStore();
+
   return (
     <View style={[styles.headerContainer]}>
       <View style={styles.headerTop}>
@@ -22,26 +25,20 @@ export const ListHeader = () => {
           </View>
         </View>
         <View style={styles.headerRight}>
-          <Link style={styles.cartContainer} href="/cart" asChild>
-            <Pressable>
-              {({ pressed }) => (
-                <View>
-                  <FontAwesome
-                    name="shopping-cart"
-                    size={25}
-                    color="gray"
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
+          <TouchableOpacity onPress={onPress} activeOpacity={0.5}>
+            <View style={styles.cartContainer}>
+              <FontAwesome
+                name="shopping-cart"
+                size={25}
+                color="gray"
+                style={{ marginRight: 15 }}
+              />
 
-                  <View style={styles.badgeContainer}>
-                    <Text style={styles.badgeText}>
-                      {/* {getItemCount()} */}1
-                    </Text>
-                  </View>
-                </View>
-              )}
-            </Pressable>
-          </Link>
+              <View style={styles.badgeContainer}>
+                <Text style={styles.badgeText}>{getItemCount()}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
           <TouchableOpacity
             // onPress={handleSignOut}
             style={styles.signOutButton}
@@ -148,8 +145,8 @@ const styles = StyleSheet.create({
   categoryText: {},
   badgeContainer: {
     position: "absolute",
-    top: -5,
-    right: 10,
+    top: 0,
+    right: 20,
     backgroundColor: "#1BC464",
     borderRadius: 10,
     width: 20,

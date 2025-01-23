@@ -8,7 +8,7 @@ const TabBarIcon = (props: {
   return <FontAwesome size={24} {...props} />;
 };
 
-const tabsLayout = () => {
+const TabsLayout = () => {
   return (
     <SafeAreaView edges={["top"]} className="h-full">
       <Tabs
@@ -49,4 +49,4 @@ const tabsLayout = () => {
   );
 };
 
-export default tabsLayout;
+export default TabsLayout;

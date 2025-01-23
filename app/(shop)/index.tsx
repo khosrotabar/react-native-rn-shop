@@ -1,21 +1,53 @@
-import { Text, FlatList, StyleSheet } from "react-native";
-import React from "react";
+import { FlatList, StyleSheet } from "react-native";
+import React, { useRef, useState } from "react";
 import { PRODUCTS } from "../../assets/products";
 import ProductListItem from "../../components/ProductListItem";
 import { ListHeader } from "../../components/ListHeader";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import CartItems from "../../components/CartItems";
 
 const Home = () => {
+  const bottomSheetRef = useRef<BottomSheet>(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openBottomSheet = () => setIsOpen(true);
+
   return (
-    <FlatList
-      data={PRODUCTS}
-      renderItem={({ item }) => <ProductListItem product={item} />}
-      keyExtractor={(item) => item.id.toString()}
-      numColumns={2}
-      ListHeaderComponent={<ListHeader />}
-      contentContainerStyle={styles.flatListContent}
-      columnWrapperStyle={styles.flatListColumn}
-      style={{ paddingHorizontal: 10, paddingVertical: 5 }}
-    />
+    <GestureHandlerRootView className="flex-1">
+      <FlatList
+        data={PRODUCTS}
+        renderItem={({ item }) => <ProductListItem product={item} />}
+        keyExtractor={(item) => item.id.toString()}
+        numColumns={2}
+        ListHeaderComponent={<ListHeader onPress={openBottomSheet} />}
+        contentContainerStyle={styles.flatListContent}
+        columnWrapperStyle={styles.flatListColumn}
+        style={{ paddingHorizontal: 10, paddingVertical: 5 }}
+      />
+      <BottomSheet
+        ref={bottomSheetRef}
+        index={isOpen ? 0 : -1}
+        snapPoints={["40%", "85%"]}
+        onChange={(index) => {
+          if (index === -1) setIsOpen(false);
+        }}
+        enablePanDownToClose
+        keyboardBehavior="extend"
+        activeOffsetY={0}
+        bottomInset={0}
+        containerStyle={{
+          borderRadius: 16,
+          marginBottom: 10,
+          marginLeft: 10,
+          marginRight: 10,
+        }}
+      >
+        <BottomSheetView className="flex-1">
+          <CartItems />
+        </BottomSheetView>
+      </BottomSheet>
+    </GestureHandlerRootView>
   );
 };
 
