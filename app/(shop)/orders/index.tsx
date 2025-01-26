@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import React from "react";
 import { ORDERS } from "../../../assets/orders";
-import { Link } from "expo-router";
+import { Link, Stack } from "expo-router";
 import { Order, OrderStatus } from "../../../assets/types/order";
 
 const ststusDisplayText: Record<OrderStatus, string> = {

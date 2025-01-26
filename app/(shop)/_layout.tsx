@@ -1,6 +1,8 @@
-import { Tabs } from "expo-router";
+import { Redirect, Tabs } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FontAwesome } from "@expo/vector-icons";
+import { useAuth } from "../../providers/auth-provider";
+import { ActivityIndicator } from "react-native";
 
 const TabBarIcon = (props: {
   name: React.ComponentProps<typeof FontAwesome>["name"];
@@ -9,6 +11,11 @@ const TabBarIcon = (props: {
 };
 
 const TabsLayout = () => {
+  const { session, mounting } = useAuth();
+
+  if (mounting) return <ActivityIndicator />;
+  if (!session) return <Redirect href="/auth" />;
+
   return (
     <SafeAreaView edges={["top"]} className="h-full">
       <Tabs
@@ -38,7 +45,9 @@ const TabsLayout = () => {
           name="orders"
           options={{
             title: "Orders",
-            headerShown: false,
+            headerShown: true,
+            headerTitleAlign: "center",
+            headerStyle: { height: 0 },
             tabBarIcon(props) {
               return <TabBarIcon {...props} name="book" />;
             },

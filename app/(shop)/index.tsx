@@ -6,6 +6,7 @@ import { ListHeader } from "../../components/ListHeader";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import CartItems from "../../components/CartItems";
+import Auth from "../auth";
 
 const Home = () => {
   const bottomSheetRef = useRef<BottomSheet>(null);
